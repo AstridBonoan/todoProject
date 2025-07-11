@@ -1,0 +1,45 @@
+version: "3.9"
+
+networks:
+  frontend-net:
+  backend-net:
+
+services:
+  backend:
+    build: ./backend
+    image: my-flask-backend:prod
+    networks:
+      - backend-net
+    expose:
+      - "5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+
+  frontend:
+    build: ./frontend
+    image: my-react-frontend:prod
+    ports:
+      - "80:80"
+    networks:
+      - frontend-net
+      - backend-net
+    depends_on:
+      backend:
+        condition: service_healthy
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.5'

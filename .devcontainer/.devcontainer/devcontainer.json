@@ -1,0 +1,20 @@
+{
+  "name": "Ubuntu Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [5173, 5174, 5000],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-python.python",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "postCreateCommand": "pip install -r my-flask-app/requirements.txt && npm install --prefix my-todo-app",
+  "remoteUser": "vscode"
+}

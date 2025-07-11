@@ -1,0 +1,14 @@
+// .vscode/settings.json
+{
+  "editor.formatOnSave": true,
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.rulers": [88],
+    "editor.tabSize": 4
+  }
+}
