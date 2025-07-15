@@ -15,32 +15,23 @@ def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
 
-
-# Initialize Flask extensions with app context
+    # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)
     api.init_app(app)
     jwt.init_app(app)
     mail.init_app(app)
-
+    bcrypt.init_app(app)
     cors.init_app(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
     limiter.init_app(app)
 
-    # Register API routes
+    # Import models so Alembic detects them
+    from app import models
+
+    # Register API routes and blueprints
     register_routes(app)
-
-    bcrypt.init_app(app)
-
-    # Enable CORS for the React frontend running on localhost:5173
-    CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
-
-    # Register API routes (Flask-RESTX namespaces)
-    register_routes(app)
-
-    # Register the auth blueprint separately (since it’s not a Flask-RESTX namespace)
     app.register_blueprint(auth_bp)
 
-    # Simple health check endpoint for uptime monitoring
     @app.route('/health')
     def health_check():
         return jsonify({"status": "healthy"}), 200

@@ -10,5 +10,8 @@
   "[python]": {
     "editor.rulers": [88],
     "editor.tabSize": 4
-  }
+  },
+  "python.analysis.extraPaths": [
+    "./my-flask-app/venv/lib64/site-packages"
+  ]
 }
