@@ -1,12 +1,19 @@
 from datetime import datetime
 from app.extensions import db
+<<<<<<< HEAD
+=======
+from app.extensions import bcrypt
+>>>>>>> 77732ee (Initial commit with updated Flask todo app)
 from enum import Enum
 from sqlalchemy import (
     Column, Integer, String, ForeignKey, DateTime, Boolean, Enum as PgEnum, Table, JSON
 )
 from sqlalchemy.orm import relationship, backref
 from flask_sqlalchemy import SQLAlchemy
+<<<<<<< HEAD
 from werkzeug.security import generate_password_hash, check_password_hash
+=======
+>>>>>>> 77732ee (Initial commit with updated Flask todo app)
 
 # Enum for Todo status
 class TodoStatus(Enum):
@@ -22,6 +29,7 @@ todo_tag = Table('todo_tag', db.Model.metadata,
 
 class User(db.Model):
     __tablename__ = 'users'
+<<<<<<< HEAD
     id = Column(Integer, primary_key=True)
     username = Column(String(80), unique=True, nullable=False)
     email = Column(String(120), unique=True, nullable=False)
@@ -48,6 +56,27 @@ class User(db.Model):
     preferences = Column(JSON, nullable=True)
     todos = relationship('Todo', back_populates='user', cascade='all, delete-orphan')
 
+=======
+    
+    id = Column(Integer, primary_key=True)
+    username = Column(String(80), unique=True, nullable=False)
+    email = Column(String(120), unique=True, nullable=False)
+    name = Column(String(120), nullable=True)
+    preferences = Column(JSON, nullable=True)
+    password_hash = Column(String(128), nullable=True)
+    is_verified = Column(Boolean, default=False, nullable=False)
+    is_active = Column(Boolean, default=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    todos = relationship('Todo', back_populates='user', cascade='all, delete-orphan')
+
+    def set_password(self, password: str) -> None:
+        self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    def check_password(self, password: str) -> bool:
+        return bcrypt.check_password_hash(self.password_hash, password)
+    
+>>>>>>> 77732ee (Initial commit with updated Flask todo app)
 class Todo(db.Model):
     __tablename__ = 'todos'
     id = Column(Integer, primary_key=True)
@@ -73,6 +102,7 @@ class CompletionHistory(db.Model):
     todo_id = Column(Integer, ForeignKey('todos.id'), nullable=False)
     completed_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     todo = relationship('Todo', back_populates='completion_history')
+<<<<<<< HEAD
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -105,3 +135,5 @@ role_permissions = Table(
     Column('role_id', Integer, ForeignKey('roles.id'), primary_key=True),
     Column('permission_id', Integer, ForeignKey('permissions.id'), primary_key=True)
 )
+=======
+>>>>>>> 77732ee (Initial commit with updated Flask todo app)
