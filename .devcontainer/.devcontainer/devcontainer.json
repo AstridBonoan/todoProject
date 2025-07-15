@@ -17,8 +17,5 @@
   },
   "postCreateCommand": "pip install -r my-flask-app/requirements.txt && npm install --prefix my-todo-app",
   "remoteUser": "vscode"
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 77732ee (Initial commit with updated Flask todo app)
+

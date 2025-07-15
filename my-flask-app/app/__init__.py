@@ -1,40 +1,34 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from .config import config_by_name
-<<<<<<< HEAD
+
 from .extensions import db, migrate, api, jwt, mail, cors, limiter
 from .routes import register_routes
 
-=======
 from .extensions import db, migrate, api, jwt, mail, bcrypt
 from .routes import register_routes
 
 # Import auth_bp blueprint to register it
 from app.resources.auth import auth_bp
 
->>>>>>> 77732ee (Initial commit with updated Flask todo app)
 def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
 
-<<<<<<< HEAD
-    # Initialize extensions
-=======
-    # Initialize Flask extensions with app context
->>>>>>> 77732ee (Initial commit with updated Flask todo app)
+
+# Initialize Flask extensions with app context
     db.init_app(app)
     migrate.init_app(app, db)
     api.init_app(app)
     jwt.init_app(app)
     mail.init_app(app)
-<<<<<<< HEAD
+
     cors.init_app(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
     limiter.init_app(app)
 
     # Register API routes
     register_routes(app)
 
-=======
     bcrypt.init_app(app)
 
     # Enable CORS for the React frontend running on localhost:5173
@@ -47,7 +41,6 @@ def create_app(config_name='development'):
     app.register_blueprint(auth_bp)
 
     # Simple health check endpoint for uptime monitoring
->>>>>>> 77732ee (Initial commit with updated Flask todo app)
     @app.route('/health')
     def health_check():
         return jsonify({"status": "healthy"}), 200

@@ -1,10 +1,3 @@
-"""Fix duplicate db instance
-
-Revision ID: a5d47a5b6597
-Revises: bd7ecb5a614b
-Create Date: 2025-07-01 23:27:08.743638
-
-"""
 from alembic import op
 import sqlalchemy as sa
 
